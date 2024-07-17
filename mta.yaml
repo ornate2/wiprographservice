@@ -1,0 +1,79 @@
+_schema-version: "3.1"
+ID: wiprograph
+description: A simple CAP project.
+version: 1.0.0
+modules:
+- name: wiprograph-srv
+  type: nodejs
+  path: gen/srv
+  provides:
+  - name: srv-api
+    properties:
+      srv-url: ${default-url}
+  parameters:
+    buildpack: nodejs_buildpack
+    readiness-health-check-http-endpoint: /health
+    readiness-health-check-type: http
+  build-parameters:
+    builder: npm
+- name: wiprograph-destination-content
+  type: com.sap.application.content
+  requires:
+  - name: wiprograph-destination-service
+    parameters:
+      content-target: true
+  - name: wiprograph_html_repo_host
+    parameters:
+      service-key:
+        name: wiprograph_html_repo_host-key
+  - name: uaa_wiprograph
+    parameters:
+      service-key:
+        name: uaa_wiprograph-key
+  parameters:
+    content:
+      instance:
+        destinations:
+        - Name: wiprograph_wiprograph_html_repo_host
+          ServiceInstanceName: wiprograph-html5-app-host-service
+          ServiceKeyName: wiprograph_html_repo_host-key
+          sap.cloud.service: wiprograph
+        - Authentication: OAuth2UserTokenExchange
+          Name: wiprograph_uaa_wiprograph
+          ServiceInstanceName: wiprograph-xsuaa-service
+          ServiceKeyName: uaa_wiprograph-key
+          sap.cloud.service: wiprograph
+        existing_destinations_policy: ignore
+  build-parameters:
+    no-source: true
+resources:
+- name: wiprograph-destination-service
+  type: org.cloudfoundry.managed-service
+  parameters:
+    config:
+      HTML5Runtime_enabled: true
+      version: 1.0.0
+    service: destination
+    service-name: wiprograph-destination-service
+    service-plan: lite
+- name: wiprograph_html_repo_host
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-name: wiprograph-html5-app-host-service
+    service-plan: app-host
+- name: uaa_wiprograph
+  type: org.cloudfoundry.managed-service
+  parameters:
+    path: ./xs-security.json
+    service: xsuaa
+    service-name: wiprograph-xsuaa-service
+    service-plan: application
+parameters:
+  enable-parallel-deployments: true
+build-parameters:
+  before-all:
+  - builder: custom
+    commands:
+    - npm ci
+    - npx cds build --production

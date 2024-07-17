@@ -1,0 +1,2 @@
+sap.ui.define(["sap/ui/core/mvc/Controller"],function(r){"use strict";return r.extend("com.wipro.wiprograph.controller.wiprograph",{onInit:function(){}})});
+//# sourceMappingURL=wiprograph.controller.js.map

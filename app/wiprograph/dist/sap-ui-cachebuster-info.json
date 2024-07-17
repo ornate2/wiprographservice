@@ -1,0 +1,22 @@
+{
+  "model/models.js.map": 1721197265226,
+  "Component.js": 1721196656661,
+  "controller/wiprograph.controller.js": 1721196656673,
+  "controller/App.controller.js": 1721196656673,
+  "manifest.json": 1721197265059,
+  "model/models.js": 1721196656669,
+  "controller/App-dbg.controller.js": 1721196656673,
+  "controller/App.controller.js.map": 1721197265214,
+  "controller/wiprograph-dbg.controller.js": 1721196656673,
+  "controller/wiprograph.controller.js.map": 1721197265224,
+  "Component-dbg.js": 1721196656661,
+  "Component.js.map": 1721197265217,
+  "model/models-dbg.js": 1721196656669,
+  "i18n/i18n.properties": 1721196656669,
+  "Component-preload.js": 1721197265316,
+  "Component-preload.js.map": 1721197265316,
+  "view/wiprograph.view.xml": 1721196656673,
+  "view/App.view.xml": 1721196656673,
+  "css/style.css": 1721196656673,
+  "index.html": 1721196656661
+}

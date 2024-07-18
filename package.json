@@ -6,6 +6,8 @@
   "license": "UNLICENSED",
   "private": true,
   "dependencies": {
+    "@sap-cloud-sdk/http-client": "^3.16.0",
+    "@sap-cloud-sdk/resilience": "^3.16.0",
     "@sap/cds": "^7",
     "@sap/xssec": "^3",
     "express": "^4",
@@ -32,13 +34,11 @@
       "WiproOdata": {
         "kind": "odata",
         "credentials": {
-          "destination": "SavingPOData",
-          "path": "/sap/opu/odata/sap"
+          "destination": "GraphPOSet",
+          "path": "/sap/opu/odata/sap/"
         }
       },
-      
-        "auth": "mocked"
-      
+      "auth": "mocked"
     }
   }
 }

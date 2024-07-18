@@ -1,7 +1,59 @@
 <mvc:View controllerName="com.wipro.wiprograph.controller.wiprograph"
-    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns:ta="sap.ui.table"
+	xmlns:l="sap.ui.layout"
     xmlns="sap.m">
     <Page id="page" title="{i18n>title}">
-        <content />
+       <content>
+			<IconTabBar id="DisposalAssetIconTabId"
+                    class="sapUiResponsiveContentPadding" select="IconTabBarSelect">
+				<items>
+					<IconTabFilter icon="sap-icon://request" id="data_Form"
+                            text="{i18n>NEW}" key="PO_Form_Details" tooltip="{i18n>NEW}"
+                            class="MasterDataIconTabBar" design="Vertical">
+						<List id="idList" selectionChange="onChange" mode="SingleSelectMaster" items="{/SavingsPOSet}">
+							<items>
+								<StandardListItem type="Navigation"   title="{PONumber}"  description="{VendorName} " info="{POCurrency} - {POValue}" />
+							</items>
+						</List>
+					</IconTabFilter>
+					<IconTabFilter icon="sap-icon://account" id="data_Clusterhead"
+                            text="{i18n>Clusterhead}" key="PO_Form_Details" tooltip="{i18n>Clusterhead}"
+                            class="MasterDataIconTabBar" design="Vertical">
+						<List id="idListClusterhead" selectionChange="onChange" mode="SingleSelectMaster" items="{PoDataModel>/}">
+							<items>
+								<StandardListItem type="Navigation"   title="{PoDataModel>PONumber}" description="{PoDataModel>VendorName} - {PoDataModel>POValue}" info="{PoDataModel>POCurrency}" />
+							</items>
+						</List>
+					</IconTabFilter>
+					<IconTabFilter icon="sap-icon://bbyd-active-sales" id="data_BFM"
+                            text="{i18n>BFM}" key="PO_Form_Details" tooltip="{i18n>BFM}"
+                            class="MasterDataIconTabBar" design="Vertical">
+						<List id="idListBFM" selectionChange="onChange" mode="SingleSelectMaster" items="{PoDataModel>/}">
+							<items>
+								<StandardListItem type="Navigation"   title="{PoDataModel>PONumber}" description="{PoDataModel>VendorName} - {PoDataModel>POValue}" info="{PoDataModel>POCurrency}" />
+							</items>
+						</List>
+					</IconTabFilter>
+					<IconTabFilter icon="sap-icon://approvals" id="data_approver"
+                            text="{i18n>Approved}" key="PO_Form_Details" tooltip="{i18n>Approved}"
+                            class="MasterDataIconTabBar" design="Vertical">
+						<List id="idListApproved" selectionChange="onChange" mode="SingleSelectMaster" items="{PoDataModel>/}">
+							<items>
+								<StandardListItem type="Navigation"   title="{PoDataModel>PONumber}" counter="{PoDataModel>POValue}" description="{PoDataModel>VendorName} - {PoDataModel>POValue}" info="{PoDataModel>POCurrency}" />
+							</items>
+						</List>
+					</IconTabFilter>
+					<IconTabFilter icon="sap-icon://employee-rejections" id="data_Reject"
+                            text="{i18n>btnReject}" key="PO_Form_Details" tooltip="{i18n>btnReject}"
+                            class="MasterDataIconTabBar" design="Vertical">
+						<List id="idListReject" selectionChange="onChange" mode="SingleSelectMaster" items="{PoDataModel>/}">
+							<items>
+								<StandardListItem type="Navigation"   title="{PoDataModel>PONumber}" description="{PoDataModel>VendorName} - {PoDataModel>POValue}" info="{PoDataModel>POCurrency}" />
+							</items>
+						</List>
+					</IconTabFilter>
+				</items>
+			</IconTabBar>
+		</content>
     </Page>
 </mvc:View>

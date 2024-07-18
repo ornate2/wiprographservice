@@ -18,7 +18,7 @@ async function fetchData(req) {
             method: 'GET',
             path: '/ZMM_PO_SAVING_SRV/SavingsPOSet'
         });
-
+             console.log(response)
         const poData = response;
         console.log("Data fetched successfully:", poData);
 

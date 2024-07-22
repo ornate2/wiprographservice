@@ -6,6 +6,7 @@
   "license": "UNLICENSED",
   "private": true,
   "dependencies": {
+    "@cap-js-community/odata-v2-adapter": "^1.13.0",
     "@sap-cloud-sdk/http-client": "^3.16.0",
     "@sap-cloud-sdk/resilience": "^3.16.0",
     "@sap/cds": "^7",
@@ -34,8 +35,8 @@
       "WiproOdata": {
         "kind": "odata",
         "credentials": {
-          "destination": "GraphPOSet",
-          "path": "/sap/opu/odata/sap/"
+          "destination": "SavingPOData",
+          "path": "/odata/v4/po/"
         }
       },
       "auth": "mocked"

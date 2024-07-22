@@ -17,7 +17,7 @@
     },
     "dataSources": {
       "mainService": {
-        "uri": "/sap/opu/odata/sap/",
+        "uri": "/odata/v4/po/",
         "type": "OData",
         "settings": {
           "annotations": [],
@@ -87,33 +87,28 @@
     },
     "routing": {
       "config": {
-        "routerClass": "sap.m.routing.Router",
-        "viewType": "XML",
-        "async": true,
-        "viewPath": "com.wipro.wiprograph.view",
-        "controlAggregation": "pages",
-        "controlId": "app",
-        "clearControlAggregation": false
+          "routerClass": "sap.m.routing.Router",
+          "viewType": "XML",
+          "async": true,
+          "viewPath": "com.wipro.wiprograph.view",
+          "controlAggregation": "pages",
+          "controlId": "app",
+          "clearControlAggregation": false,
+          "clearTarget": false
       },
       "routes": [
-        {
-          "name": "Routewiprograph",
-          "pattern": ":?query:",
-          "target": [
-            "Targetwiprograph"
-          ]
-        }
-      ],
-      "targets": {
-        "Targetwiprograph": {
-          "viewType": "XML",
-          "transition": "slide",
-          "clearControlAggregation": false,
-          "viewId": "wiprograph",
-          "viewName": "wiprograph"
-        }
-      }
-    },
+          {
+              "name": "wiprograph",
+              "pattern": "",
+              "view":"wiprograph"
+          },
+          {
+              "name": "wiprographForm",
+              "pattern": "wiprographForm/{PONumber}/{VendorName}/{POValue}/{POCurrency}/{Vendor}/{StartDate}/{EndDate}/{tabId}",
+              "view":"wiprographForm"
+          }
+      ]
+},
     "rootView": {
       "viewName": "com.wipro.wiprograph.view.App",
       "type": "XML",

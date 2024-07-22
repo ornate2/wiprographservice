@@ -5,7 +5,7 @@
 sap.ui.define([
         "sap/ui/core/UIComponent",
         "sap/ui/Device",
-        "com/wipro/wiprograph/model/models"
+        "com/wipro/wiprograph/model/models",
     ],
     function (UIComponent, Device, models) {
         "use strict";
@@ -24,8 +24,10 @@ sap.ui.define([
                 // call the base component's init function
                 UIComponent.prototype.init.apply(this, arguments);
 
-                // enable routing
-                this.getRouter().initialize();
+                 // enable routing
+                 var oRouter = this.getRouter();
+                 oRouter.initialize();
+                 
 
                 // set the device model
                 this.setModel(models.createDeviceModel(), "device");

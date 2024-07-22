@@ -1,13 +1,16 @@
 service POService {
     function fetchData() returns String;
-    @readonly
-    @cds.persistence.exists
+
+    // @cds.persistence.exists
     entity SavingsPO {
         CreateSaving: String;
         Cluster: String;
         Category: String;
         ProjectDes: String;
+        LastYearPOCurr: String;
+        Remarks: String;
         Region: String;
+        Attachments: String;
         LastYearPONo: String;
         LastYearPOValue: String;
         Attachment: String;
@@ -16,12 +19,15 @@ service POService {
         OrderValue: String;
         Savings: String;
         SavingsPer: String;
+        Approver: String;
+        Reject: String;
         SavingType: String;
         BFMValidation: String;
         SavingsDistribution: Boolean;
         YOYSavingFunction: String;
         PONumber: String;
         Buyer: String;
+        PODate: String;
         POValue: String;
         POCurrency: String;
         Vendor: String;

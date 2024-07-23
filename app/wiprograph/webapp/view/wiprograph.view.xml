@@ -17,7 +17,7 @@
 							</items>
 						</List>
 					</IconTabFilter>
-					<IconTabFilter icon="sap-icon://bbyd-active-sales" id="data_BFM" count="{counterlength>/data_BFM}"
+					<IconTabFilter icon="sap-icon://pending" id="data_BFM" count="{counterlength>/data_BFM}" iconColor="Critical"
                             text="{i18n>GPBFM}" key="PO_Form_Details" tooltip="{i18n>GPBFM}"
                             class="MasterDataIconTabBar" design="Vertical">
 						<List id="idListBFM"  itemPress="onListItemSelect"  mode="SingleSelectMaster" items="{/SavingsPOSet}">
@@ -26,7 +26,7 @@
 							</items>
 						</List>
 					</IconTabFilter>
-					<IconTabFilter icon="sap-icon://activity-individual" id="data_CFOBFM" count="{counterlength>/data_BFM}"
+					<IconTabFilter icon="sap-icon://pending" id="data_CFOBFM" count="{counterlength>/data_BFM}" iconColor="Critical"
                             text="{i18n>CFOBFM}" key="PO_Form_Details" tooltip="{i18n>CFOBFM}"
                             class="MasterDataIconTabBar" design="Vertical">
 						<List id="idListCFOBFM"  itemPress="onListItemSelect" mode="SingleSelectMaster" items="{/SavingsPOSet}">
@@ -35,7 +35,7 @@
 							</items>
 						</List>
 					</IconTabFilter>
-					<IconTabFilter icon="sap-icon://account" id="data_Clusterhead" count="{counterlength>/data_Cluster}"
+					<IconTabFilter icon="sap-icon://pending" id="data_Clusterhead" count="{counterlength>/data_Cluster}"  iconColor="Critical"
                             text="{i18n>Clusterhead}" key="PO_Form_Details" tooltip="{i18n>Clusterhead}"
                             class="MasterDataIconTabBar" design="Vertical">
 						<List id="idListClusterhead"  itemPress="onListItemSelect" mode="SingleSelectMaster" items="{/SavingsPOSet}">

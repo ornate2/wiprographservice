@@ -155,6 +155,8 @@ function (Controller, formatter, JSONModel, TooltipBase, UIComponent, DataType) 
             var sVendorCode = oBindingContext.getProperty("Vendor");
             var sSavingStartDate = oBindingContext.getProperty("StartDate");
             var sSavingEndDate = oBindingContext.getProperty("EndDate");
+            var sBuyer = oBindingContext.getProperty("Buyer");
+            var sRegion = oBindingContext.getProperty("Buyer");
             var oRouter = this.getOwnerComponent().getRouter();
             oRouter.navTo("wiprographForm", {
                 
@@ -165,6 +167,8 @@ function (Controller, formatter, JSONModel, TooltipBase, UIComponent, DataType) 
                 Vendor: sVendorCode,
                 StartDate: sSavingStartDate,
                 EndDate: sSavingEndDate,
+                Buyer: sBuyer,
+                Region: sRegion,
                 tabId: sSelectedTabId 
             }, false); // false means no hash change
         }

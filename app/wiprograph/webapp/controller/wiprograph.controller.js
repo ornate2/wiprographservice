@@ -1,9 +1,12 @@
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "com/wipro/wiprograph/Format/formatter",
-    "sap/ui/model/json/JSONModel"
+    "sap/ui/model/json/JSONModel",
+    "sap/ui/core/TooltipBase",
+    "sap/ui/core/UIComponent",
+    "sap/ui/base/DataType"
 ],
-function (Controller, formatter, JSONModel) {
+function (Controller, formatter, JSONModel, TooltipBase, UIComponent, DataType) {
     "use strict";
     var that;
     var oGModel;
@@ -98,13 +101,53 @@ function (Controller, formatter, JSONModel) {
             }
             
         },
-        onChange: function (oEvent) {
+        // onChange: function (oEvent) {
+        //     var sSelectedTabId = oEvent.getParameters().id;
+        //     // var oSelectedItem = oEvent.getParameter("listItem") || oEvent.getSource();
+        //     // if (!oSelectedItem) {
+        //     //     return;
+        //     // }
+        //     // var oBindingContext = oSelectedItem.getBindingContext();
+        //      var oList = oEvent.getSource();
+        //     var oSelectedItem = oEvent.getParameter("listItem") || oEvent.getSource();
+        //      var oBindingContext = oSelectedItem.getBindingContext();
+        //     // this._sSelectedItemPath = oBindingContext.getPath();
+        //     // var oSelectedData = oBindingContext.getObject();
+        //     // var oView = this.getView();
+        //     // oView.getModel("predictionModelData").setData(oSelectedData);
+        //     // oView.getModel("predictionModelData").updateBindings();
+        //     var sPONumber = oBindingContext.getProperty("PONumber");
+        //     var sVendorName = oBindingContext.getProperty("VendorName");
+        //     var sPOValue = oBindingContext.getProperty("POValue");
+        //     var sPOValueCurrency = oBindingContext.getProperty("POCurrency");
+        //     var sVendorCode = oBindingContext.getProperty("Vendor");
+        //     var sSavingStartDate = oBindingContext.getProperty("StartDate");
+        //     var sSavingEndDate = oBindingContext.getProperty("EndDate");
+            
+       
+        //     var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+        //     oRouter.navTo("wiprographForm", {
+        //         PONumber: sPONumber,
+        //         VendorName: sVendorName,
+        //         POValue: sPOValue,
+        //         POCurrency: sPOValueCurrency,
+        //         Vendor: sVendorCode,
+        //         StartDate: sSavingStartDate,
+        //         EndDate: sSavingEndDate,
+        //         tabId: sSelectedTabId // Pass the selected tab ID as parameter
+        //       // Pass the action as a parameter
+        //     });
+        // },
+        
+        onListItemSelect: function(oEvent){
             var sSelectedTabId = oEvent.getParameters().id;
+            // var oList = oEvent.getSource();
+            // var oSelectedItem = oEvent.getParameter("listItem") || oEvent.getSource();
+            //  var oBindingContext = oSelectedItem.getBindingContext();
+            var oSelectedItem = oEvent.getSource();
             var oSelectedItem = oEvent.getParameter("listItem") || oEvent.getSource();
-            if (!oSelectedItem) {
-                return;
-            }
             var oBindingContext = oSelectedItem.getBindingContext();
+            var oSelectedData = oBindingContext.getObject();
             var sPONumber = oBindingContext.getProperty("PONumber");
             var sVendorName = oBindingContext.getProperty("VendorName");
             var sPOValue = oBindingContext.getProperty("POValue");
@@ -112,10 +155,9 @@ function (Controller, formatter, JSONModel) {
             var sVendorCode = oBindingContext.getProperty("Vendor");
             var sSavingStartDate = oBindingContext.getProperty("StartDate");
             var sSavingEndDate = oBindingContext.getProperty("EndDate");
-            
-       
-            var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+            var oRouter = this.getOwnerComponent().getRouter();
             oRouter.navTo("wiprographForm", {
+                
                 PONumber: sPONumber,
                 VendorName: sVendorName,
                 POValue: sPOValue,
@@ -123,12 +165,8 @@ function (Controller, formatter, JSONModel) {
                 Vendor: sVendorCode,
                 StartDate: sSavingStartDate,
                 EndDate: sSavingEndDate,
-                tabId: sSelectedTabId // Pass the selected tab ID as parameter
-              // Pass the action as a parameter
-            });
-        },
-        IconTabBarSelect: function(){
-            
+                tabId: sSelectedTabId 
+            }, false); // false means no hash change
         }
     });
 });

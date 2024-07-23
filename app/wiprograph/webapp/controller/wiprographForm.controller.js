@@ -21,21 +21,13 @@ function (Controller, MessageToast, JSONModel, Dialog, TooltipBase, UIComponent,
             oRouter.getRoute("wiprographForm").attachPatternMatched(this._onObjectMatched, this);
             var data = {
                 "Tabledetails":[{
-                  "Quarter": "0001",
-                  "Saving": "10",
+                  "Quarter": "Q4-2024",
+                  "Saving": "",
                   },
                   {
-                    "Quarter": "0002",
-                    "Saving": "20",
-                    },
-                    {
-                      "Quarter": "003",
-                      "Saving": "30",
-                      },
-                      {
-                        "Quarter": "004",
-                        "Saving": "40",
-                        }],
+                    "Quarter": "Q1-2025",
+                    "Saving": "",
+                    }],
               "clusterdetails": [
                           {"Cluster": "Acquired Entity" },
                           { "Cluster": "CIS & PASS"  },
@@ -189,17 +181,17 @@ function (Controller, MessageToast, JSONModel, Dialog, TooltipBase, UIComponent,
            
         },
         
-        formatDate: function(date) {
-          if (!date || Object.prototype.toString.call(date) !== "[object Date]" || isNaN(date.getTime())) {
-              return null;
-          }
+      //   formatDate: function(date) {
+      //     if (!date || Object.prototype.toString.call(date) !== "[object Date]" || isNaN(date.getTime())) {
+      //         return null;
+      //     }
 
-          const day = ("0" + date.getDate()).slice(-2);
-          const month = ("0" + (date.getMonth() + 1)).slice(-2);
-          const year = date.getFullYear();
+      //     const day = ("0" + date.getDate()).slice(-2);
+      //     const month = ("0" + (date.getMonth() + 1)).slice(-2);
+      //     const year = date.getFullYear();
 
-          return `${day}/${month}/${year}`;
-      },
+      //     return `${day}/${month}/${year}`;
+      // },
         onAfterRendering: function() {
           // Call the superclass' onAfterRendering first
           if (sap.ui.core.mvc.Controller.prototype.onAfterRendering) {
@@ -207,36 +199,36 @@ function (Controller, MessageToast, JSONModel, Dialog, TooltipBase, UIComponent,
           }
       
           // Your logic for handling dates and table visibility
-          var startDate = this.getView().byId("Saving_start").getDateValue();
-          var endDate = this.getView().byId("Saving_End").getDateValue();
+          // var startDate = this.getView().byId("Saving_start").getDateValue();
+          // var endDate = this.getView().byId("Saving_End").getDateValue();
       
-          if (startDate && endDate) { // Check if dates are valid
-              var diff = Math.abs(startDate.getTime() - endDate.getTime());
-              var diffD = Math.ceil(diff / (1000 * 60 * 60 * 24)); // Difference in days
+          // if (startDate && endDate) { // Check if dates are valid
+          //     var diff = Math.abs(startDate.getTime() - endDate.getTime());
+          //     var diffD = Math.ceil(diff / (1000 * 60 * 60 * 24)); // Difference in days
       
-              var table = this.getView().byId("table_column");
+          //     var table = this.getView().byId("table_column");
       
-              if (diffD === 90) {
-                  table.setVisibleRowCount(1);
-                  table.setVisible(true);
-              } else if (diffD >= 91 && diffD <= 179) {
-                  table.setVisibleRowCount(2);
-                  table.setVisible(true);
-              } else if (diffD >= 180 && diffD <= 269) {
-                  table.setVisibleRowCount(3);
-                  table.setVisible(true);
-              } else if (diffD >= 270 && diffD <= 359) {
-                  table.setVisibleRowCount(4);
-                  table.setVisible(true);
-              } else {
-                  // Handle other cases or set default behavior
-                  table.setVisibleRowCount(0); // Hide the table or set to default state
-                  table.setVisible(false);
-              }
-          } else {
-              // Handle case where dates are not valid
-              console.error("Invalid dates selected");
-          }
+          //     if (diffD === 90) {
+          //         table.setVisibleRowCount(1);
+          //         table.setVisible(true);
+          //     } else if (diffD >= 91 && diffD <= 179) {
+          //         table.setVisibleRowCount(2);
+          //         table.setVisible(true);
+          //     } else if (diffD >= 180 && diffD <= 269) {
+          //         table.setVisibleRowCount(3);
+          //         table.setVisible(true);
+          //     } else if (diffD >= 270 && diffD <= 359) {
+          //         table.setVisibleRowCount(4);
+          //         table.setVisible(true);
+          //     } else {
+          //         // Handle other cases or set default behavior
+          //         table.setVisibleRowCount(0); // Hide the table or set to default state
+          //         table.setVisible(false);
+          //     }
+          // } else {
+          //     // Handle case where dates are not valid
+          //     console.error("Invalid dates selected");
+          // }
 
          
       },
@@ -267,23 +259,23 @@ function (Controller, MessageToast, JSONModel, Dialog, TooltipBase, UIComponent,
               MessageToast.show(sMessage);
             }
           },
-          onCalculatePercentageDifference: function(){
-            var input01 = this.getView().byId("Quated");
-            var input02 = this.getView().byId("Order_Value");
-            var input03 = this.getView().byId("po_Savings_auto");
-            var iValue1 = parseFloat(input01.getValue());
-            var iValue2 = parseFloat(input02.getValue());
-           if (!isNaN(iValue1) && !isNaN(iValue2) && iValue2 !== 0) {
-             // Calculate percentage difference
-             var iDifference = iValue1 - iValue2;
-             this.getView().byId("po_Savings").setValue(iDifference);
-             var iPercentageDifference = (iDifference / iValue1) * 100;
-             input03.setValue(iPercentageDifference.toFixed(2) + "%");
-         } else {
-             // Handle invalid input or zero division
-            console.log("no value provide in quated and order")
-         }
-      },
+      //     onCalculatePercentageDifference: function(){
+      //       var input01 = this.getView().byId("Quated");
+      //       var input02 = this.getView().byId("Order_Value");
+      //       var input03 = this.getView().byId("po_Savings_auto");
+      //       var iValue1 = parseFloat(input01.getValue());
+      //       var iValue2 = parseFloat(input02.getValue());
+      //      if (!isNaN(iValue1) && !isNaN(iValue2) && iValue2 !== 0) {
+      //        // Calculate percentage difference
+      //        var iDifference = iValue1 - iValue2;
+      //        this.getView().byId("po_Savings").setValue(iDifference);
+      //        var iPercentageDifference = (iDifference / iValue1) * 100;
+      //        input03.setValue(iPercentageDifference.toFixed(2) + "%");
+      //    } else {
+      //        // Handle invalid input or zero division
+      //       console.log("no value provide in quated and order")
+      //    }
+      // },
            _onObjectMatched: function (oEvent) {
             
             var oView = this.getView();
@@ -302,8 +294,8 @@ function (Controller, MessageToast, JSONModel, Dialog, TooltipBase, UIComponent,
             var sVendorCode = oEvent.getParameter("arguments").Vendor;
             var sSavingStartDate = oEvent.getParameter("arguments").StartDate;
             var sSavingEndDate = oEvent.getParameter("arguments").EndDate;
-            var sBuyer = oEvent.getParameter("arguments").Buyer;
-            var sRegion = oEvent.getParameter("arguments").Region;
+            //var sBuyer = oEvent.getParameter("arguments").Buyer;
+           // var sRegion = oEvent.getParameter("arguments").Region;
             var sTabId = oEvent.getParameter("arguments").tabId; // Retrieve tabId parameter
             // var startDate = oEvent.getParameter("arguments").StartDate;
             // var endDate = oEvent.getParameter("arguments").EndDate;
@@ -323,7 +315,7 @@ function (Controller, MessageToast, JSONModel, Dialog, TooltipBase, UIComponent,
               oView.byId("Quated").setEditable(false);
               oView.byId("Quated_value").setEditable(true);
               oView.byId("Quated_Curre").setEditable(true);
-              
+              oView.byId("Savings_TabelV").setEditable(true);
               
               oView.byId("Order_Value").setEditable(false);
               oView.byId("po_Savings").setEditable(false);
@@ -345,7 +337,7 @@ function (Controller, MessageToast, JSONModel, Dialog, TooltipBase, UIComponent,
               oView.byId("po_value").setEditable(false);
               oView.byId("po_Currency").setEditable(false);
               oView.byId("Description").setEditable(false);
-              
+              oView.byId("Savings_TabelV").setEditable(false);
               oView.byId("idMultiUploader_").setUploadEnabled(false);
              // oView.byId("idMultiUploader_").setMultiple(false);
               oView.byId("Quated").setEditable(false);
@@ -359,6 +351,7 @@ function (Controller, MessageToast, JSONModel, Dialog, TooltipBase, UIComponent,
               
               
               oView.byId("btn_Cancel").setVisible(true);
+              oView.byId("btn_Cancel").setText("Close");
             }else if(sTabId === "__xmlview0--idListBFM"){
               //oView.byId("Create_Saving").setEditable(false);
               oView.byId("Cluster").setEditable(false);
@@ -368,6 +361,7 @@ function (Controller, MessageToast, JSONModel, Dialog, TooltipBase, UIComponent,
               oView.byId("po_value").setEditable(false);
               oView.byId("po_Currency").setEditable(false);
               oView.byId("Description").setEditable(false);
+              oView.byId("Savings_TabelV").setEditable(false);
               oView.byId("form").setTitle("GPBFM");
               oView.byId("Quated").setEditable(false);
               oView.byId("Order_Value").setEditable(false);
@@ -376,8 +370,9 @@ function (Controller, MessageToast, JSONModel, Dialog, TooltipBase, UIComponent,
               oView.byId("Remarks_Fields").setEnabled(false);
               oView.byId("Quated_value").setEditable(false);
               oView.byId("Quated_Curre").setEditable(false);
-            
-              oView.byId("_btnSave").setVisible(true);
+              oView.byId("btn_Cancel").setVisible(true);
+              oView.byId("btn_Cancel").setText("Close");
+              // oView.byId("_btnSave").setVisible(true);
             }else if(sTabId === "__xmlview0--idListCFOBFM"){
              // oView.byId("Create_Saving").setEditable(false);
               oView.byId("Cluster").setEditable(false);
@@ -385,6 +380,7 @@ function (Controller, MessageToast, JSONModel, Dialog, TooltipBase, UIComponent,
               oView.byId("saving_type").setEditable(false);
               oView.byId("La_po_no").setEditable(false);
               oView.byId("form").setTitle("CFOBFM");
+              oView.byId("Savings_TabelV").setEditable(false);
               oView.byId("po_value").setEditable(false);
               oView.byId("po_Currency").setEditable(false);
               oView.byId("Description").setEditable(false);
@@ -395,7 +391,9 @@ function (Controller, MessageToast, JSONModel, Dialog, TooltipBase, UIComponent,
               oView.byId("Remarks_Fields").setEnabled(false);
               oView.byId("Quated_value").setEditable(false);
               oView.byId("Quated_Curre").setEditable(false);
-              oView.byId("_btnSave").setVisible(true);
+              //oView.byId("_btnSave").setVisible(true);
+              oView.byId("btn_Cancel").setVisible(true);
+              oView.byId("btn_Cancel").setText("Close");
             }else if(sTabId === "__xmlview0--idListApproved"){
               //oView.byId("Create_Saving").setEditable(false);
               oView.byId("Cluster").setEditable(false);
@@ -405,6 +403,7 @@ function (Controller, MessageToast, JSONModel, Dialog, TooltipBase, UIComponent,
               oView.byId("po_value").setEditable(false);
               oView.byId("po_Currency").setEditable(false);
               oView.byId("Description").setEditable(false);
+              oView.byId("Savings_TabelV").setEditable(false);
               oView.byId("form").setTitle("Approved");
               oView.byId("Quated").setEditable(false);
               oView.byId("Order_Value").setEditable(false);
@@ -421,6 +420,7 @@ function (Controller, MessageToast, JSONModel, Dialog, TooltipBase, UIComponent,
               oView.byId("Category_").setEditable(false);
               oView.byId("saving_type").setEditable(false);
               oView.byId("La_po_no").setEditable(false);
+              oView.byId("Savings_TabelV").setEditable(false);
               oView.byId("po_value").setEditable(false);
               oView.byId("form").setTitle("Reject");
               oView.byId("po_Currency").setEditable(false);
@@ -446,7 +446,7 @@ function (Controller, MessageToast, JSONModel, Dialog, TooltipBase, UIComponent,
               oView.byId("Description").setEditable(false);
               oView.byId("Quated_value").setEditable(false);
               oView.byId("Quated_Curre").setEditable(false);
-             
+              oView.byId("Savings_TabelV").setEditable(false);
               oView.byId("Quated").setEditable(false);
               oView.byId("Order_Value").setEditable(false);
               oView.byId("po_Savings").setEditable(false);
@@ -511,7 +511,9 @@ function (Controller, MessageToast, JSONModel, Dialog, TooltipBase, UIComponent,
               informationDialog.open();
           }else{
             var saveButton = oView.byId("_btnSave").setEnabled(false);
-         
+            var remarks = this.byId("Remarks_Fields").getValue();
+            var buyer = "manik@gmail.com";
+        var remarksbuyer = this.byId("Remarks_Fields").setValue(buyer + " " + remarks);
           var oData = {
             PONumber: oView.byId("AssetTitleId").getValue(),
             POValue: oView.byId("POValue_").getValue(),
@@ -533,9 +535,10 @@ function (Controller, MessageToast, JSONModel, Dialog, TooltipBase, UIComponent,
             QuatedValue: oView.byId("Quated").getValue(),
             OrderValue: oView.byId("Order_Value").getValue(),
             Savings: oView.byId("po_Savings").getValue(),
-            SavingsPer: oView.byId("po_Savings_auto").getValue(),
-            
-            Remarks: oView.byId("Remarks_Fields").getValue()
+            SavingsPer: oView.byId("po_Savings_auto").getValue(),          
+            Remarks: oView.byId("Remarks_Fields").getValue(remarksbuyer),
+            QuatedValueCurr: oView.byId("Quated_value").getValue(),
+            Quated_Curre: oView.byId("Quated_Curre").getSelectedKey(),
         };
       
         // Perform the AJAX POST request to submit the data
@@ -571,7 +574,9 @@ function (Controller, MessageToast, JSONModel, Dialog, TooltipBase, UIComponent,
                     sOrderValue: oData.OrderValue,
                     sSavings: oData.Savings,
                     sSavingsPer: oData.SavingsPer,
-                    sRemarks: oData.Remarks
+                    sRemarks: oData.Remarks,
+                    sQuatedValueCurr: oData.QuatedValueCurr,
+                    sQuated_Curre: oData.Quated_Curre,
                 };
                 var oPredictionModel = new sap.ui.model.json.JSONModel(oDataSet);
                 oView.setModel(oPredictionModel, "predictionModelData");
@@ -619,6 +624,9 @@ function (Controller, MessageToast, JSONModel, Dialog, TooltipBase, UIComponent,
                  });
                  informationDialog.open();
           }else{
+            var remarks = this.byId("Remarks_Fields").getValue();
+            var buyer = "manik@gmail.com";
+        var remarksbuyer = this.byId("Remarks_Fields").setValue(" " + remarks);
             var oData = {
               PONumber: oView.byId("AssetTitleId").getValue(),
               POValue: oView.byId("POValue_").getValue(),
@@ -641,7 +649,10 @@ function (Controller, MessageToast, JSONModel, Dialog, TooltipBase, UIComponent,
               OrderValue: oView.byId("Order_Value").getValue(),
               Savings: oView.byId("po_Savings").getValue(),
               SavingsPer: oView.byId("po_Savings_auto").getValue(),
-              Remarks: oView.byId("Remarks_Fields").getValue()
+              Remarks: oView.byId("Remarks_Fields").getValue(remarksbuyer),
+              QuatedValueCurr: oView.byId("Quated_value").getValue(),
+              Quated_Curre: oView.byId("Quated_Curre").getSelectedKey(),
+
           };
       
           // Perform the AJAX POST request to submit the data
@@ -661,6 +672,7 @@ function (Controller, MessageToast, JSONModel, Dialog, TooltipBase, UIComponent,
                   setTimeout(function() {
                       var oRouter = this.getOwnerComponent().getRouter();
                       if (oRouter) {
+                        
                           // Set the model with data to pass to view 2
                           var oDataSet = {
                               sPONumber: oData.PONumber,
@@ -684,7 +696,9 @@ function (Controller, MessageToast, JSONModel, Dialog, TooltipBase, UIComponent,
                               sOrderValue: oData.OrderValue,
                               sSavings: oData.Savings,
                               sSavingsPer: oData.SavingsPer,
-                              sRemarks:  oData.Remarks
+                              sRemarks:  oData.Remarks,
+                              sQuatedValueCurr: oData.QuatedValueCurr,
+                              sQuated_Curre: oData.Quated_Curre,
                           };
       
                           var oPredictionModel = new sap.ui.model.json.JSONModel(oDataSet);
@@ -706,7 +720,7 @@ function (Controller, MessageToast, JSONModel, Dialog, TooltipBase, UIComponent,
         oApprovedPress: function(){
           var oView = this.getView();
           var oModel = oView.getModel();
-
+          
           var oData = {
               PONumber: oView.byId("AssetTitleId").getValue(),
               POValue: oView.byId("POValue_").getValue(),
@@ -881,6 +895,20 @@ function (Controller, MessageToast, JSONModel, Dialog, TooltipBase, UIComponent,
     },
     _onPoLastYear: function(){
 
+    },
+    _onPoLastYear: function(){
+      let Last_PO_NO = this.getView().byId("La_po_no").getValue("");
+
+      if(Last_PO_NO === ""){
+        this.getView().byId("La_po_no").setValue("4500427800");
+      let LastYPOValue = this.getView().byId("po_value").setValue("66");
+      let LastYPOCurr = this.getView().byId("po_Currency").setValue("USD")
+      this.getView().byId("_lastPOnumberdata").setEnabled(false)
+      }else{
+        let LastYPOValue = this.getView().byId("po_value").setValue("66");
+      let LastYPOCurr = this.getView().byId("po_Currency").setValue("USD")
+      }
+     
     }
         
     });

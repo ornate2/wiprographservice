@@ -8,3 +8,18 @@
     overflow: visible;
     vertical-align: bottom;
 }
+.sapMFeedIn .sapMBtn {
+    visibility: hidden;
+    width: 4.0rem;
+    height: 3.75rem;
+    padding: 0.25rem 0.625rem 0.25rem 0.625rem;
+    margin: 0.125rem 0 0.125rem 0.5rem;
+    position: absolute;
+    right: 0rem;
+    bottom: 0rem;
+    border-width: .0625rem;
+    border-radius: .5rem;
+    background-color: #fff;
+    font-size: .875rem;
+    font-family: "72-SemiboldDuplex", "72-SemiboldDuplexfull", "72", "72full", Arial, Helvetica, sans-serif;
+}

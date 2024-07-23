@@ -105,7 +105,7 @@
           },
           {
               "name": "wiprographForm",
-              "pattern": "wiprographForm/{PONumber}/{VendorName}/{POValue}/{POCurrency}/{Vendor}/{StartDate}/{EndDate}/{Buyer}/{Region}/{tabId}",
+              "pattern": "wiprographForm/{PONumber}/{VendorName}/{POValue}/{POCurrency}/{Vendor}/{StartDate}/{EndDate}/{tabId}",
             
               "target": "wiprographForm"
           }

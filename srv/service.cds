@@ -13,6 +13,8 @@ service POService {
         Attachments: String;
         LastYearPONo: String;
         LastYearPOValue: String;
+         QuatedValueCurr: String;
+        Quated_Curre: String;
         Attachment: String;
         QuatedValue: String;
         Currency: String;

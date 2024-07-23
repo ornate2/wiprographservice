@@ -114,7 +114,7 @@
 									<core:Title text="" class="remove-space" />
 									<Label text="{i18n>QvalueandCurr}"
                                         class="sapMLabelNoText" />
-									<Input id="Quated_value" maxLength="20" editable="true"  value="" ></Input>
+									<Input id="Quated_value" maxLength="20" editable="true"  value="{predictionModelData>/sQuatedValueCurr}" ></Input>
 								
 									<ComboBox id="Quated_Curre" 
                                         change="NewQvalueandCurrChange" editable="true" items="{TableModel>/QuatedCurrdetails}">
@@ -137,11 +137,12 @@
 									<Input id="po_Savings_auto" maxLength="20" editable="false"  value="{predictionModelData>/sSavingsPer}" ></Input>
 									<Label text=""
                                         class="sapMLabelNoText" />
-									<ui:Table
-                 id="table_column" visibleRowCount="4" 
+										 
+									<ui:Table 
+                 id="table_column" visibleRowCount="2" 
                 rows="{TableModel>/Tabledetails}" visible="true"  selectionMode="None"  >
 										<ui:extension>
-											<OverflowToolbar style="Clear">
+											<OverflowToolbar style="Standard">
 												<ToolbarSpacer />
 												<Button
                             icon="sap-icon://add"
@@ -163,7 +164,7 @@
 											<ui:Column>
 												<Label text="{i18n>Quarter}" />
 												<ui:template>
-													<Input
+													<Input editable="false" id="Quarter_TabelV"
                                 value="{TableModel>Quarter}"
                                 placeholder="Quarter"
                                 
@@ -174,9 +175,9 @@
 												<Label text="{i18n>Saving}" />
 												<ui:template>
 													<Input
-                                value="{TableModel>Saving}"
+                                value="{TableModel>Saving}" id="Savings_TabelV" 
                                 showSuggestion="true"
-                                placeholder="Saving"
+                               
                                 
                             />
 												</ui:template>

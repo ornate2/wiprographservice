@@ -64,7 +64,7 @@
 							</items>
 						</List>
 					</IconTabFilter>
-					<IconTabFilter icon="sap-icon://pending" id="data_Pending_Approver" visible="{view>/showPendingTab}" 	iconColor="Critical"
+					<IconTabFilter icon="sap-icon://pending" id="data_Pending_Approver" 	iconColor="Critical"
                             text="{i18n>btnPending}" key="PO_Form_Details" tooltip="{i18n>btnPending}" count="{counterlength>/data_PenAppr}"
                             class="MasterDataIconTabBar" design="Vertical">
 						<List id="idPending_Approval"  itemPress="onListItemSelect" mode="SingleSelectMaster" items="{/SavingsPOSet}">

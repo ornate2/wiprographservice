@@ -115,16 +115,20 @@
 									<Label text="{i18n>QvalueandCurr}"
                                         class="sapMLabelNoText" />
 									<Input id="Quated_value" maxLength="20" editable="true"  value="" ></Input>
-									<Input id="Quated_Curre" maxLength="20" editable="true"  value="" ></Input>
+								
+									<ComboBox id="Quated_Curre" 
+                                        change="NewQvalueandCurrChange" editable="true" items="{TableModel>/QuatedCurrdetails}">
+										<core:Item key="{TableModel>Currency}" text="{TableModel>Currency}" />
+									</ComboBox>
 									<Label text="{i18n>Qvalue}"
                                         class="sapMLabelNoText" />
-									<Input id="Quated" maxLength="20" editable="true"  value="{predictionModelData>/sQuatedValue}" change="onCalculatePercentageDifference"></Input>
+									<Input id="Quated" maxLength="20" editable="false"  value="{predictionModelData>/sQuatedValue}" change="onCalculatePercentageDifference"></Input>
 									<!-- <Label text="{i18n>Currency}" required="true"
                                         class="sapMLabelNoText" /><ComboBox id="Currency_po" 
                                         change="NewCompanyCodeChange" items=""><core:Item key="{context>/POCurrency}" text="{context>/POCurrency}" /></ComboBox> -->
 									<Label text="{i18n>OValue}"
                                         class="sapMLabelNoText" />
-									<Input id="Order_Value" maxLength="20" editable="true"  value="{predictionModelData>/sOrderValue}" change="onCalculatePercentageDifference"></Input>
+									<Input id="Order_Value" maxLength="20" editable="false"   value="{predictionModel>/sPOValue}" change="onCalculatePercentageDifference"></Input>
 									<Label text="{i18n>Savings}" 
                                         class="sapMLabelNoText" />
 									<Input id="po_Savings" maxLength="20" editable="false" value="{predictionModelData>/sSavings}" ></Input>
@@ -134,8 +138,8 @@
 									<Label text=""
                                         class="sapMLabelNoText" />
 									<ui:Table
-                 id="table_column"
-                rows="{TableModel>/Tabledetails}" visible="false"   selectionMode="None"  >
+                 id="table_column" visibleRowCount="4" 
+                rows="{TableModel>/Tabledetails}" visible="true"  selectionMode="None"  >
 										<ui:extension>
 											<OverflowToolbar style="Clear">
 												<ToolbarSpacer />
@@ -183,7 +187,7 @@
 									<Label text="{i18n>Remarks}" 
                                         class="sapMLabelNoText" />
 										
-										<FeedInput id="Remarks_Fields" value=""
+										<FeedInput id="Remarks_Fields" value="{predictionModelData>/sRemarks}"
 		post="onPost" placeholder="Remarks"
 		showIcon="false" />
 								</forms:SimpleForm>

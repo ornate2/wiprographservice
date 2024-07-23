@@ -5,10 +5,11 @@ sap.ui.define([
     "sap/m/Dialog",
     "sap/ui/core/TooltipBase",
     "sap/ui/core/UIComponent",
-    "sap/ui/base/DataType"
+    "sap/ui/base/DataType",
+    "com/wipro/wiprograph/utils/FinancialUtils"
 
 ],
-function (Controller, MessageToast, JSONModel, Dialog, TooltipBase, UIComponent, DataType) {
+function (Controller, MessageToast, JSONModel, Dialog, TooltipBase, UIComponent, DataType, FinancialUtils) {
     "use strict";
     var that,oGModel;
     return Controller.extend("com.wipro.wiprograph.controller.wiprographForm", {
@@ -114,7 +115,21 @@ function (Controller, MessageToast, JSONModel, Dialog, TooltipBase, UIComponent,
                             "SavingType": "Cost Avoidance" },
                           {
                             "SavingType": "Ledger Impact"}  
-                          ]
+                          ],
+             "QuatedCurrdetails":  [
+                            {
+                              "Currency": "USD",
+                              "Rate": 1 },
+                            {
+                              "Currency": "INR",
+                              "Rate": 83.63} ,
+                              {
+                                "Currency": "CAD",
+                                "Rate": 1.38},
+                                {
+                                  "Currency": "GBP",
+                                  "Rate": 0.77}    
+                            ]
               };
               var oModel = new sap.ui.model.json.JSONModel(data);
               this.getView().setModel(oModel, "TableModel");
@@ -143,6 +158,8 @@ function (Controller, MessageToast, JSONModel, Dialog, TooltipBase, UIComponent,
               this.getView().byId("PODate_").setValue("20240102");
               
               this.getView().byId("Region").setValue("PO Plant Country");
+             // Retrieve the Date objects from the input fields
+          
              
              
               // for saving percentage
@@ -171,6 +188,18 @@ function (Controller, MessageToast, JSONModel, Dialog, TooltipBase, UIComponent,
 
            
         },
+        
+        formatDate: function(date) {
+          if (!date || Object.prototype.toString.call(date) !== "[object Date]" || isNaN(date.getTime())) {
+              return null;
+          }
+
+          const day = ("0" + date.getDate()).slice(-2);
+          const month = ("0" + (date.getMonth() + 1)).slice(-2);
+          const year = date.getFullYear();
+
+          return `${day}/${month}/${year}`;
+      },
         onAfterRendering: function() {
           // Call the superclass' onAfterRendering first
           if (sap.ui.core.mvc.Controller.prototype.onAfterRendering) {
@@ -208,21 +237,14 @@ function (Controller, MessageToast, JSONModel, Dialog, TooltipBase, UIComponent,
               // Handle case where dates are not valid
               console.error("Invalid dates selected");
           }
+
+         
       },
         handleNavBack: function(){
             var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
             oRouter.navTo("wiprograph");
             
         },
-        formatInput: function(value){
-            let numericValue = value.replace(/[^\d.]/g, '');
-    
-           
-            let integerValue = Math.floor(Number(numericValue));
-        
-          
-            return integerValue.toString();
-          },
           onPOValueChange: function(){
             var oInput = oEvent.getSource();
             var sValue = oInput.getValue();
@@ -271,6 +293,7 @@ function (Controller, MessageToast, JSONModel, Dialog, TooltipBase, UIComponent,
             oView.byId("_btnSubmit").setVisible(false);
             oView.byId("_btnSave").setVisible(false);
             oView.byId("btn_Cancel").setVisible(false);
+            oView.byId("Order_Value").setEditable(false);
             
             var sPONumber = oEvent.getParameter("arguments").PONumber;
             var sVendorName = oEvent.getParameter("arguments").VendorName;
@@ -279,7 +302,15 @@ function (Controller, MessageToast, JSONModel, Dialog, TooltipBase, UIComponent,
             var sVendorCode = oEvent.getParameter("arguments").Vendor;
             var sSavingStartDate = oEvent.getParameter("arguments").StartDate;
             var sSavingEndDate = oEvent.getParameter("arguments").EndDate;
+            var sBuyer = oEvent.getParameter("arguments").Buyer;
+            var sRegion = oEvent.getParameter("arguments").Region;
             var sTabId = oEvent.getParameter("arguments").tabId; // Retrieve tabId parameter
+            // var startDate = oEvent.getParameter("arguments").StartDate;
+            // var endDate = oEvent.getParameter("arguments").EndDate;
+  
+           
+            // Generate the quarters
+            
             if(sTabId === "__xmlview0--idList"){
              // oView.byId("Create_Saving").setEditable(true);
               oView.byId("Cluster").setEditable(true);
@@ -289,8 +320,12 @@ function (Controller, MessageToast, JSONModel, Dialog, TooltipBase, UIComponent,
               oView.byId("po_value").setEditable(true);
               oView.byId("po_Currency").setEditable(true);
               oView.byId("Description").setEditable(true);
-              oView.byId("Quated").setEditable(true);
-              oView.byId("Order_Value").setEditable(true);
+              oView.byId("Quated").setEditable(false);
+              oView.byId("Quated_value").setEditable(true);
+              oView.byId("Quated_Curre").setEditable(true);
+              
+              
+              oView.byId("Order_Value").setEditable(false);
               oView.byId("po_Savings").setEditable(false);
               oView.byId("po_Savings_auto").setEditable(false);
               oView.byId("Remarks_Fields").setEnabled(true);
@@ -310,16 +345,18 @@ function (Controller, MessageToast, JSONModel, Dialog, TooltipBase, UIComponent,
               oView.byId("po_value").setEditable(false);
               oView.byId("po_Currency").setEditable(false);
               oView.byId("Description").setEditable(false);
+              
+              oView.byId("idMultiUploader_").setUploadEnabled(false);
+             // oView.byId("idMultiUploader_").setMultiple(false);
               oView.byId("Quated").setEditable(false);
               oView.byId("Order_Value").setEditable(false);
               oView.byId("po_Savings").setEditable(false);
               oView.byId("po_Savings_auto").setEditable(false);
               oView.byId("Remarks_Fields").setEnabled(false);
               oView.byId("form").setTitle("Cluster Head");
-              // oView.byId("bfmValidationLabel").setVisible(false);
-              // oView.byId("bfmValidationinp").setVisible(false);
-              // oView.byId("YOYSavinput").setVisible(false);
-              // oView.byId("YOYSavLabel").setVisible(false);
+              oView.byId("Quated_value").setEditable(false);
+              oView.byId("Quated_Curre").setEditable(false);
+              
               
               oView.byId("btn_Cancel").setVisible(true);
             }else if(sTabId === "__xmlview0--idListBFM"){
@@ -337,10 +374,9 @@ function (Controller, MessageToast, JSONModel, Dialog, TooltipBase, UIComponent,
               oView.byId("po_Savings").setEditable(false);
               oView.byId("po_Savings_auto").setEditable(false);
               oView.byId("Remarks_Fields").setEnabled(false);
-              // oView.byId("bfmValidationLabel").setVisible(true);
-              // oView.byId("bfmValidationinp").setVisible(true);
-              // oView.byId("YOYSavinput").setVisible(true);
-              // oView.byId("YOYSavLabel").setVisible(true);
+              oView.byId("Quated_value").setEditable(false);
+              oView.byId("Quated_Curre").setEditable(false);
+            
               oView.byId("_btnSave").setVisible(true);
             }else if(sTabId === "__xmlview0--idListCFOBFM"){
              // oView.byId("Create_Saving").setEditable(false);
@@ -357,10 +393,8 @@ function (Controller, MessageToast, JSONModel, Dialog, TooltipBase, UIComponent,
               oView.byId("po_Savings").setEditable(false);
               oView.byId("po_Savings_auto").setEditable(false);
               oView.byId("Remarks_Fields").setEnabled(false);
-              // oView.byId("bfmValidationLabel").setVisible(true);
-              // oView.byId("bfmValidationinp").setVisible(true);
-              // oView.byId("YOYSavinput").setVisible(true);
-              // oView.byId("YOYSavLabel").setVisible(true);
+              oView.byId("Quated_value").setEditable(false);
+              oView.byId("Quated_Curre").setEditable(false);
               oView.byId("_btnSave").setVisible(true);
             }else if(sTabId === "__xmlview0--idListApproved"){
               //oView.byId("Create_Saving").setEditable(false);
@@ -376,11 +410,9 @@ function (Controller, MessageToast, JSONModel, Dialog, TooltipBase, UIComponent,
               oView.byId("Order_Value").setEditable(false);
               oView.byId("po_Savings").setEditable(false);
               oView.byId("po_Savings_auto").setEditable(false);
-              // oView.byId("bfmValidationLabel").setVisible(false);
-              // oView.byId("bfmValidationinp").setVisible(false);
-              // oView.byId("YOYSavinput").setVisible(false);
-              // oView.byId("YOYSavLabel").setVisible(false);
-              oView.byId("Remarks_Fields").setEnabled(false);
+              oView.byId("Quated_value").setEditable(false);
+              oView.byId("Quated_Curre").setEditable(false);
+              oView.byId("Remarks_Fields").setEnabled(true);
               
               oView.byId("btn_Approval").setVisible(true);
             }else if(sTabId === "__xmlview0--idListReject"){
@@ -395,13 +427,11 @@ function (Controller, MessageToast, JSONModel, Dialog, TooltipBase, UIComponent,
               oView.byId("Description").setEditable(false);
               oView.byId("Quated").setEditable(false);
               oView.byId("Order_Value").setEditable(false);
-              // oView.byId("bfmValidationLabel").setVisible(false);
-              // oView.byId("bfmValidationinp").setVisible(false);
-              // oView.byId("YOYSavinput").setVisible(false);
-              // oView.byId("YOYSavLabel").setVisible(false);
+              oView.byId("Quated_value").setEditable(false);
+              oView.byId("Quated_Curre").setEditable(false);
               oView.byId("po_Savings").setEditable(false);
               oView.byId("po_Savings_auto").setEditable(false);
-              oView.byId("Remarks_Fields").setEnabled(false);
+              oView.byId("Remarks_Fields").setEnabled(true);
               
               oView.byId("btn_Reject").setVisible(true);
             }else if(sTabId === "__xmlview0--idPending_Approval"){
@@ -414,15 +444,14 @@ function (Controller, MessageToast, JSONModel, Dialog, TooltipBase, UIComponent,
               oView.byId("po_value").setEditable(false);
               oView.byId("po_Currency").setEditable(false);
               oView.byId("Description").setEditable(false);
-              // oView.byId("bfmValidationLabel").setVisible(false);
-              // oView.byId("bfmValidationinp").setVisible(false);
-              // oView.byId("YOYSavinput").setVisible(false);
-              // oView.byId("YOYSavLabel").setVisible(false);
+              oView.byId("Quated_value").setEditable(false);
+              oView.byId("Quated_Curre").setEditable(false);
+             
               oView.byId("Quated").setEditable(false);
               oView.byId("Order_Value").setEditable(false);
               oView.byId("po_Savings").setEditable(false);
               oView.byId("po_Savings_auto").setEditable(false);
-              oView.byId("Remarks_Fields").setEnabled(false);
+              oView.byId("Remarks_Fields").setEnabled(true);
               
               oView.byId("btn_Approval").setVisible(true);
               oView.byId("btn_Reject").setVisible(true);
@@ -439,6 +468,7 @@ function (Controller, MessageToast, JSONModel, Dialog, TooltipBase, UIComponent,
               sVendorCode : sVendorCode,
               sSavingStartDate: sSavingStartDate,
               sSavingEndDate : sSavingEndDate,
+
             }
             var oPredictionModel = new sap.ui.model.json.JSONModel(oData);
             oView.setModel(oPredictionModel, "predictionModel");
@@ -446,10 +476,42 @@ function (Controller, MessageToast, JSONModel, Dialog, TooltipBase, UIComponent,
         },
         onSaveData: function(){
           var oView = this.getView();
-          var saveButton = oView.byId("_btnSave").setEnabled(false);
+         
           var oView = this.getView();
           var sPONumber = this.getOwnerComponent().getRouter().getRoute("wiprographForm").getPattern().split("/")[2]; // Retrieve the passed PONumber
-          
+          var SavinTypeData = oView.byId("saving_type").getSelectedKey();
+          if (SavinTypeData === ""){
+            var Msg = "Saving Type is Mandatory";
+            var Warning = "Information";
+            var Message = "Message";
+            var Yes = "ok";
+            var Accept = "Accept";
+            var Reject = "Reject";
+           // var No = "Close";
+              var informationDialog = new Dialog({
+                title: Warning,
+                  type: Message,
+                  state: Warning,
+                  content: new sap.m.Text({
+                      text: Msg
+                  }),
+                  beginButton: new sap.m.Button({
+                      text: Yes,
+                      type: Accept,
+                      press: function() {
+                        
+                        informationDialog.close();
+                      }
+                  }),
+                
+                  afterClose: function() {
+                      informationDialog.destroy();
+                  }
+              });
+              informationDialog.open();
+          }else{
+            var saveButton = oView.byId("_btnSave").setEnabled(false);
+         
           var oData = {
             PONumber: oView.byId("AssetTitleId").getValue(),
             POValue: oView.byId("POValue_").getValue(),
@@ -472,9 +534,10 @@ function (Controller, MessageToast, JSONModel, Dialog, TooltipBase, UIComponent,
             OrderValue: oView.byId("Order_Value").getValue(),
             Savings: oView.byId("po_Savings").getValue(),
             SavingsPer: oView.byId("po_Savings_auto").getValue(),
+            
             Remarks: oView.byId("Remarks_Fields").getValue()
         };
-    
+      
         // Perform the AJAX POST request to submit the data
         $.ajax({
             url: "/odata/v4/po/SavingsPOSet",
@@ -518,6 +581,7 @@ function (Controller, MessageToast, JSONModel, Dialog, TooltipBase, UIComponent,
                 MessageToast.show("Failed to submit data.");
             }
         });
+      }
         },
         onSubmitPress: function() {
 
@@ -620,7 +684,7 @@ function (Controller, MessageToast, JSONModel, Dialog, TooltipBase, UIComponent,
                               sOrderValue: oData.OrderValue,
                               sSavings: oData.Savings,
                               sSavingsPer: oData.SavingsPer,
-                              sRemarks: oData.Remarks
+                              sRemarks:  oData.Remarks
                           };
       
                           var oPredictionModel = new sap.ui.model.json.JSONModel(oDataSet);
@@ -742,12 +806,15 @@ function (Controller, MessageToast, JSONModel, Dialog, TooltipBase, UIComponent,
         if(oSavingType === "Ledger Impact"){
           this.getView().byId("label_La_po_no").setVisible(true);
           this.getView().byId("La_po_no").setVisible(true);
-          this.getView().byId("La_po_no").setEditable(false);
+          this.getView().byId("La_po_no").setEditable(true);
           this.getView().byId("_lastPOnumberdata").setVisible(true);
           this.getView().byId("label_po_value").setVisible(true);
           this.getView().byId("po_value").setVisible(true);
+          this.getView().byId("po_value").setEditable(false);
           this.getView().byId("label_po_Currency").setVisible(true);
           this.getView().byId("po_Currency").setVisible(true);
+          this.getView().byId("po_Currency").setEditable(false);
+          
         }
         else{
           this.getView().byId("label_La_po_no").setVisible(false);
@@ -759,7 +826,62 @@ function (Controller, MessageToast, JSONModel, Dialog, TooltipBase, UIComponent,
           this.getView().byId("po_Currency").setVisible(false);
         }
 
-      }
+      },
+      NewQvalueandCurrChange: function() {
+        var oView = this.getView();
+        
+        // Get quoted value and selected currency key
+        var quatedValue = parseFloat(oView.byId("Quated_value").getValue());
+        var quatedCurrKey = oView.byId("Quated_Curre").getSelectedKey();
+        
+        // Fetch the currency details from the model
+        var oTableModel = this.getView().getModel("TableModel");
+        var aCurrencyDetails = oTableModel.getProperty("/QuatedCurrdetails");
+        
+        // Find the currency rate for the selected currency
+        var selectedCurrency = aCurrencyDetails.find(function(currency) {
+            return currency.Currency === quatedCurrKey;
+        });
+        
+        // Find the USD currency rate
+        var usdCurrency = aCurrencyDetails.find(function(currency) {
+            return currency.Currency === "USD";
+        });
+        
+        if (selectedCurrency && usdCurrency) {
+            var rate = selectedCurrency.Rate;
+            var usdRate = usdCurrency.Rate;
+        
+            // Convert the quoted value using the selected currency rate
+            var convertedValue = quatedValue / rate;
+            oView.byId("Quated").setValue(convertedValue.toFixed(2));
+        
+            // Get input values for percentage calculation
+            var input01 = oView.byId("Quated");
+            var input02 = oView.byId("Order_Value");
+            var input03 = oView.byId("po_Savings_auto");
+        
+            var iValue1 = parseFloat(input01.getValue());
+            var iValue2 = parseFloat(input02.getValue());
+        
+            if (!isNaN(iValue1) && !isNaN(iValue2) && iValue2 !== 0) {
+                // Calculate percentage difference using USD rate
+                var iDifference = iValue1 - iValue2;
+                oView.byId("po_Savings").setValue(iDifference);
+        
+                var iPercentageDifference = (iDifference / (iValue1 / rate * usdRate)) * 100;
+                input03.setValue(iPercentageDifference.toFixed(2) + "%");
+            } else {
+                // Handle invalid input or zero division
+                console.log("Invalid input or zero division in quoted and order values");
+            }
+        } else {
+            console.log("Selected currency rate or USD rate not found");
+        }
+    },
+    _onPoLastYear: function(){
+
+    }
         
     });
 });

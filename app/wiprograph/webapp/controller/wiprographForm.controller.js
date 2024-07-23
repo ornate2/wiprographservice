@@ -2,9 +2,13 @@ sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "sap/m/MessageToast",
     "sap/ui/model/json/JSONModel",
-    "sap/m/Dialog"
+    "sap/m/Dialog",
+    "sap/ui/core/TooltipBase",
+    "sap/ui/core/UIComponent",
+    "sap/ui/base/DataType"
+
 ],
-function (Controller, MessageToast, JSONModel, Dialog) {
+function (Controller, MessageToast, JSONModel, Dialog, TooltipBase, UIComponent, DataType) {
     "use strict";
     var that,oGModel;
     return Controller.extend("com.wipro.wiprograph.controller.wiprographForm", {
@@ -126,6 +130,14 @@ function (Controller, MessageToast, JSONModel, Dialog) {
                 var key = oEvent.charCode || oEvent.keyCode || 0;
                 return(key == 8 || key == 9 || key == 13 || key == 46 || key == 110 || key == 190 || (key >= 35 && key <= 40) || (key >= 48 && key <= 57) || (key >= 96 && key <= 105));
               });
+              this.getView().byId("La_po_no").attachBrowserEvent("keydown", function(oEvent) {
+                var key = oEvent.charCode || oEvent.keyCode || 0;
+                return(key == 8 || key == 9 || key == 13 || key == 46 || key == 110 || key == 190 || (key >= 35 && key <= 40) || (key >= 48 && key <= 57) || (key >= 96 && key <= 105));
+              });
+              this.getView().byId("po_value").attachBrowserEvent("keydown", function(oEvent) {
+                var key = oEvent.charCode || oEvent.keyCode || 0;
+                return(key == 8 || key == 9 || key == 13 || key == 46 || key == 110 || key == 190 || (key >= 35 && key <= 40) || (key >= 48 && key <= 57) || (key >= 96 && key <= 105));
+              });
     
     
               this.getView().byId("PODate_").setValue("20240102");
@@ -200,6 +212,7 @@ function (Controller, MessageToast, JSONModel, Dialog) {
         handleNavBack: function(){
             var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
             oRouter.navTo("wiprograph");
+            
         },
         formatInput: function(value){
             let numericValue = value.replace(/[^\d.]/g, '');
@@ -268,7 +281,7 @@ function (Controller, MessageToast, JSONModel, Dialog) {
             var sSavingEndDate = oEvent.getParameter("arguments").EndDate;
             var sTabId = oEvent.getParameter("arguments").tabId; // Retrieve tabId parameter
             if(sTabId === "__xmlview0--idList"){
-              oView.byId("Create_Saving").setEditable(true);
+             // oView.byId("Create_Saving").setEditable(true);
               oView.byId("Cluster").setEditable(true);
               oView.byId("Category_").setEditable(true);
               oView.byId("saving_type").setEditable(true);
@@ -289,7 +302,7 @@ function (Controller, MessageToast, JSONModel, Dialog) {
               oView.byId("_btnSubmit").setVisible(true);
               oView.byId("_btnSave").setVisible(true)
             }else if(sTabId === "__xmlview0--idListClusterhead"){
-              oView.byId("Create_Saving").setEditable(false);
+             // oView.byId("Create_Saving").setEditable(false);
               oView.byId("Cluster").setEditable(false);
               oView.byId("Category_").setEditable(false);
               oView.byId("saving_type").setEditable(false);
@@ -310,7 +323,7 @@ function (Controller, MessageToast, JSONModel, Dialog) {
               
               oView.byId("btn_Cancel").setVisible(true);
             }else if(sTabId === "__xmlview0--idListBFM"){
-              oView.byId("Create_Saving").setEditable(false);
+              //oView.byId("Create_Saving").setEditable(false);
               oView.byId("Cluster").setEditable(false);
               oView.byId("Category_").setEditable(false);
               oView.byId("saving_type").setEditable(false);
@@ -330,7 +343,7 @@ function (Controller, MessageToast, JSONModel, Dialog) {
               // oView.byId("YOYSavLabel").setVisible(true);
               oView.byId("_btnSave").setVisible(true);
             }else if(sTabId === "__xmlview0--idListCFOBFM"){
-              oView.byId("Create_Saving").setEditable(false);
+             // oView.byId("Create_Saving").setEditable(false);
               oView.byId("Cluster").setEditable(false);
               oView.byId("Category_").setEditable(false);
               oView.byId("saving_type").setEditable(false);
@@ -350,7 +363,7 @@ function (Controller, MessageToast, JSONModel, Dialog) {
               // oView.byId("YOYSavLabel").setVisible(true);
               oView.byId("_btnSave").setVisible(true);
             }else if(sTabId === "__xmlview0--idListApproved"){
-              oView.byId("Create_Saving").setEditable(false);
+              //oView.byId("Create_Saving").setEditable(false);
               oView.byId("Cluster").setEditable(false);
               oView.byId("Category_").setEditable(false);
               oView.byId("saving_type").setEditable(false);
@@ -371,7 +384,7 @@ function (Controller, MessageToast, JSONModel, Dialog) {
               
               oView.byId("btn_Approval").setVisible(true);
             }else if(sTabId === "__xmlview0--idListReject"){
-              oView.byId("Create_Saving").setEditable(false);
+              //oView.byId("Create_Saving").setEditable(false);
               oView.byId("Cluster").setEditable(false);
               oView.byId("Category_").setEditable(false);
               oView.byId("saving_type").setEditable(false);
@@ -392,7 +405,7 @@ function (Controller, MessageToast, JSONModel, Dialog) {
               
               oView.byId("btn_Reject").setVisible(true);
             }else if(sTabId === "__xmlview0--idPending_Approval"){
-              oView.byId("Create_Saving").setEditable(false);
+             // oView.byId("Create_Saving").setEditable(false);
               oView.byId("Cluster").setEditable(false);
               oView.byId("Category_").setEditable(false);
               oView.byId("saving_type").setEditable(false);
@@ -434,6 +447,9 @@ function (Controller, MessageToast, JSONModel, Dialog) {
         onSaveData: function(){
           var oView = this.getView();
           var saveButton = oView.byId("_btnSave").setEnabled(false);
+          var oView = this.getView();
+          var sPONumber = this.getOwnerComponent().getRouter().getRoute("wiprographForm").getPattern().split("/")[2]; // Retrieve the passed PONumber
+          
           var oData = {
             PONumber: oView.byId("AssetTitleId").getValue(),
             POValue: oView.byId("POValue_").getValue(),
@@ -444,7 +460,7 @@ function (Controller, MessageToast, JSONModel, Dialog) {
             Vendor: oView.byId("Vendor_Code").getValue(),
             StartDate: oView.byId("Saving_start").getDateValue(),
             EndDate: oView.byId("Saving_End").getDateValue(),
-            CreateSaving: oView.byId("Create_Saving").getSelectedKey(),
+            //CreateSaving: oView.byId("Create_Saving").getSelectedKey(),
             Cluster: oView.byId("Cluster").getSelectedKey(),
             Category: oView.byId("Category_").getSelectedKey(),
             SavingType: oView.byId("saving_type").getSelectedKey(),
@@ -549,7 +565,7 @@ function (Controller, MessageToast, JSONModel, Dialog) {
               Vendor: oView.byId("Vendor_Code").getValue(),
               StartDate: oView.byId("Saving_start").getDateValue(),
               EndDate: oView.byId("Saving_End").getDateValue(),
-              CreateSaving: oView.byId("Create_Saving").getSelectedKey(),
+             // CreateSaving: oView.byId("Create_Saving").getSelectedKey(),
               Cluster: oView.byId("Cluster").getSelectedKey(),
               Category: oView.byId("Category_").getSelectedKey(),
               SavingType: oView.byId("saving_type").getSelectedKey(),
@@ -639,7 +655,7 @@ function (Controller, MessageToast, JSONModel, Dialog) {
               EndDate: oView.byId("Saving_End").getDateValue(),
               
               // Additional fields from "Savings Details" section
-              CreateSaving: oView.byId("Create_Saving").getSelectedKey(),
+           //   CreateSaving: oView.byId("Create_Saving").getSelectedKey(),
               Cluster: oView.byId("Cluster").getSelectedKey(),
               Category: oView.byId("Category_").getSelectedKey(),
               SavingType: oView.byId("saving_type").getSelectedKey(),
@@ -682,7 +698,68 @@ function (Controller, MessageToast, JSONModel, Dialog) {
         onCancelPress: function(){
           var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
           oRouter.navTo("wiprograph");
+        },
+        oRejectPress: function () {
+          // Get the form by its ID
+          var oView = this.getView();
+          var aInputs = [
+              oView.byId("AssetTitleId"),
+              oView.byId("POValue_"),
+              oView.byId("POCurrency_"),
+              oView.byId("PODate_"),
+              oView.byId("Vendor_Name"),
+              oView.byId("Vendor_Code"),
+              oView.byId("Region"),
+              oView.byId("Saving_start"),
+              oView.byId("Saving_End"),
+              oView.byId("La_po_no"),
+              oView.byId("po_value"),
+              oView.byId("po_Currency"),
+              oView.byId("Description"),
+              oView.byId("Quated"),
+              oView.byId("Order_Value"),
+              oView.byId("po_Savings"),
+              oView.byId("po_Savings_auto"),
+              oView.byId("Remarks_Fields")
+          ];
+      
+          aInputs.forEach(function(oInput) {
+              oInput.setValue("");
+          });
+      
+          // If you have combo boxes or other input fields, clear their selection similarly
+         // oView.byId("Create_Saving").setSelectedKey("");
+          oView.byId("Cluster").setSelectedKey("");
+          oView.byId("Category_").setSelectedKey("");
+          oView.byId("saving_type").setSelectedKey("");
+          // Navigate back to the previous page
+          var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+          oRouter.navTo("wiprograph");
+          
+      },
+      NewSavingTypeChange: function(){
+        var oSavingType = this.getView().byId("saving_type").getSelectedKey();
+        if(oSavingType === "Ledger Impact"){
+          this.getView().byId("label_La_po_no").setVisible(true);
+          this.getView().byId("La_po_no").setVisible(true);
+          this.getView().byId("La_po_no").setEditable(false);
+          this.getView().byId("_lastPOnumberdata").setVisible(true);
+          this.getView().byId("label_po_value").setVisible(true);
+          this.getView().byId("po_value").setVisible(true);
+          this.getView().byId("label_po_Currency").setVisible(true);
+          this.getView().byId("po_Currency").setVisible(true);
         }
+        else{
+          this.getView().byId("label_La_po_no").setVisible(false);
+          this.getView().byId("La_po_no").setVisible(false);
+          this.getView().byId("label_po_value").setVisible(false);
+          this.getView().byId("_lastPOnumberdata").setVisible(false);
+          this.getView().byId("po_value").setVisible(false);
+          this.getView().byId("label_po_Currency").setVisible(false);
+          this.getView().byId("po_Currency").setVisible(false);
+        }
+
+      }
         
     });
 });

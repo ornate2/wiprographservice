@@ -100,14 +100,27 @@
           {
               "name": "wiprograph",
               "pattern": "",
-              "view":"wiprograph"
+              "target": "wiprograph"
+              
           },
           {
               "name": "wiprographForm",
               "pattern": "wiprographForm/{PONumber}/{VendorName}/{POValue}/{POCurrency}/{Vendor}/{StartDate}/{EndDate}/{tabId}",
-              "view":"wiprographForm"
+            
+              "target": "wiprographForm"
           }
-      ]
+      ],
+      "targets": {
+          "wiprograph": {
+              "viewName": "wiprograph",
+              "viewLevel": 1
+          },
+          "wiprographForm": {
+              "viewName": "wiprographForm",
+              "viewLevel": 2
+          }
+      }
+      
 },
     "rootView": {
       "viewName": "com.wipro.wiprograph.view.App",

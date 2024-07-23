@@ -11,7 +11,7 @@
 					<IconTabFilter icon="sap-icon://request" id="data_Form" 	count="{counterlength>/data_length}"
                             text="{i18n>NEW}" key="PO_Form_Details" tooltip="{i18n>NEW}"  visible="true"
                             class="MasterDataIconTabBar" design="Vertical">
-						<List id="idList" selectionChange="onChange"   mode="SingleSelectMaster" items="{path: '/SavingsPOSet'}">
+						<List id="idList"  itemPress="onListItemSelect"  mode="SingleSelectMaster" items="{path: '/SavingsPOSet'}">
 							<items>
 								<StandardListItem type="Navigation" press="onListItemPress"  title="{PONumber}" description="{VendorName} - {Buyer}" info="{POCurrency} -{POValue}" />
 							</items>
@@ -20,7 +20,7 @@
 					<IconTabFilter icon="sap-icon://bbyd-active-sales" id="data_BFM" count="{counterlength>/data_BFM}"
                             text="{i18n>GPBFM}" key="PO_Form_Details" tooltip="{i18n>GPBFM}"
                             class="MasterDataIconTabBar" design="Vertical">
-						<List id="idListBFM" selectionChange="onChange" mode="SingleSelectMaster" items="{/SavingsPOSet}">
+						<List id="idListBFM"  itemPress="onListItemSelect"  mode="SingleSelectMaster" items="{/SavingsPOSet}">
 							<items>
 								<StandardListItem type="Navigation"   title="{PONumber}" description="{VendorName}" info="{POCurrency} - {POValue}" />
 							</items>
@@ -29,7 +29,7 @@
 					<IconTabFilter icon="sap-icon://activity-individual" id="data_CFOBFM" count="{counterlength>/data_BFM}"
                             text="{i18n>CFOBFM}" key="PO_Form_Details" tooltip="{i18n>CFOBFM}"
                             class="MasterDataIconTabBar" design="Vertical">
-						<List id="idListCFOBFM" selectionChange="onChange" mode="SingleSelectMaster" items="{/SavingsPOSet}">
+						<List id="idListCFOBFM"  itemPress="onListItemSelect" mode="SingleSelectMaster" items="{/SavingsPOSet}">
 							<items>
 								<StandardListItem type="Navigation"   title="{PONumber}" description="{VendorName}" info="{POCurrency} - {POValue}" />
 							</items>
@@ -38,7 +38,7 @@
 					<IconTabFilter icon="sap-icon://account" id="data_Clusterhead" count="{counterlength>/data_Cluster}"
                             text="{i18n>Clusterhead}" key="PO_Form_Details" tooltip="{i18n>Clusterhead}"
                             class="MasterDataIconTabBar" design="Vertical">
-						<List id="idListClusterhead" selectionChange="onChange" mode="SingleSelectMaster" items="{/SavingsPOSet}">
+						<List id="idListClusterhead"  itemPress="onListItemSelect" mode="SingleSelectMaster" items="{/SavingsPOSet}">
 							<items>
 								<StandardListItem type="Navigation"   title="{PONumber}" description="{VendorName}" info="{POCurrency} - {POValue}" />
 							</items>
@@ -48,12 +48,8 @@
 					<IconTabFilter icon="sap-icon://approvals" id="data_approver" 	iconColor="Positive"
                             text="{i18n>Approved}" key="PO_Form_Details" tooltip="{i18n>Approved}" count="{counterlength>/data_Aprrover}"
                             class="MasterDataIconTabBar" design="Vertical">
-						<!-- <List id="idListApproved" selectionChange="onChange" mode="SingleSelectMaster" items="{/SavingsPOSet}">
-							<items>
-								<StandardListItem type="Navigation"   title="{PONumber}" description="{VendorName} - {Approver}" info="{POCurrency} - {POValue}" />
-							</items>
-						</List> -->
-						<List id="idListApproved" selectionChange="onChange" mode="SingleSelectMaster" items="{/SavingsPOSet}">
+					
+						<List id="idListApproved"  itemPress="onListItemSelect" mode="SingleSelectMaster" items="{/SavingsPOSet}">
 							<items>
 								<StandardListItem type="Navigation"   title="{PONumber}" description="{VendorName} - {Approver}" info="{POCurrency} - {POValue}" />
 							</items>
@@ -62,7 +58,7 @@
 					<IconTabFilter icon="sap-icon://employee-rejections" id="data_Reject" iconColor="Negative"
                             text="{i18n>btnReject}" key="PO_Form_Details" tooltip="{i18n>btnReject}" count="{counterlength>/data_Reject}"
                             class="MasterDataIconTabBar" design="Vertical">
-						<List id="idListReject" selectionChange="onChange" mode="SingleSelectMaster" items="{/SavingsPOSet}">
+						<List id="idListReject"  itemPress="onListItemSelect" mode="SingleSelectMaster" items="{/SavingsPOSet}">
 							<items>
 								<StandardListItem type="Navigation"   title="{PONumber}" description="{VendorName} - {Reject}" info="{POCurrency} - {POValue}" />
 							</items>
@@ -71,7 +67,7 @@
 					<IconTabFilter icon="sap-icon://pending" id="data_Pending_Approver" visible="{view>/showPendingTab}" 	iconColor="Critical"
                             text="{i18n>btnPending}" key="PO_Form_Details" tooltip="{i18n>btnPending}" count="{counterlength>/data_PenAppr}"
                             class="MasterDataIconTabBar" design="Vertical">
-						<List id="idPending_Approval" selectionChange="onChange" mode="SingleSelectMaster" items="{/SavingsPOSet}">
+						<List id="idPending_Approval"  itemPress="onListItemSelect" mode="SingleSelectMaster" items="{/SavingsPOSet}">
 							<items>
 								<StandardListItem type="Navigation"   title="{PONumber}" description="{VendorName} " info="{POCurrency} - {POValue}" />
 							</items>

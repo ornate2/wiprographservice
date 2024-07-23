@@ -21,27 +21,27 @@
                                 columnsXL="2" columnsL="2" columnsM="2"
                                 singleContainerFullSize="false">
 										<core:Title text="" class="remove-space" />
-										<Label text="{i18n>PONO}" required="true"
+										<Label text="{i18n>PONO}" 
                                         class="sapMLabelNoText" />
 										<Input id="AssetTitleId" maxLength="50" value="{predictionModel>/sPONumber}" editable="false"></Input>
-										<Label text="{i18n>POValue}" required="true"
+										<Label text="{i18n>POValue}" 
                                         class="sapMLabelNoText" />
 										<Input id="POValue_" maxLength="50" type="Number" liveChange="onPOValueChange" editable="false" value="{predictionModel>/sPOValue}"></Input>
-										<Label text="{i18n>POCurrency}" required="true"
+										<Label text="{i18n>POCurrency}" 
                                         class="sapMLabelNoText" />
 										<Input id="POCurrency_" maxLength="50" editable="false" value="{predictionModel>/sPOValueCurrency}"></Input>
-										<Label text="{i18n>PODate}" required="true"
+										<Label text="{i18n>PODate}" 
                                         class="sapMLabelNoText" />
 										<DatePicker displayFormat="dd-MMM-yyyy" editable="false" placeholder="Starting Date" value=""
                                         valueFormat="dd-MM-yyyy" id="PODate_" change="handlePoDatet"></DatePicker>
 										<core:Title text="" class="remove-space" />
-										<Label text="{i18n>VendorName}" required="true"
+										<Label text="{i18n>VendorName}" 
                                         class="sapMLabelNoText" />
 										<Input id="Vendor_Name" value="{predictionModel>/sVendorName}" editable="false" maxLength="50"></Input>
-										<Label text="{i18n>VendorCode}" required="true"
+										<Label text="{i18n>VendorCode}"
                                         class="sapMLabelNoText" />
 										<Input id="Vendor_Code" maxLength="50" editable="false" value="{predictionModel>/sVendorCode}"></Input>
-										<Label text="{i18n>Region}" required="true"
+										<Label text="{i18n>Region}" 
                                         class="sapMLabelNoText" />
 										<Input id="Region" maxLength="50" value="" editable="false" ></Input>
 										<Label text="{i18n>Sstartdate}"
@@ -70,46 +70,52 @@
                                 columnsXL="2" columnsL="2" columnsM="2"
                                 singleContainerFullSize="false">
 									<core:Title text="" class="remove-space" />
-									<Label text="{i18n>CreateSFA}" required="true"
+									<!-- <Label text="{i18n>CreateSFA}" required="true"
                                         class="sapMLabelNoText" />
 									
 									<ComboBox id="Create_Saving" 
                                         change="NewCompanyCodeChange" items="{TableModel>/CreateSavingdetails}">
 										<core:Item key="{TableModel>CreateDetails}" text="{TableModel>CreateDetails}  {TableModel>CreateSaving}" />
-									</ComboBox>
-									<Label text="{i18n>Cluster}" required="true"
+									</ComboBox> -->
+									<Label text="{i18n>Cluster}" 
                                         class="sapMLabelNoText" />
 									<ComboBox id="Cluster" 
                                         change="NewCompanyCodeChange" items="{TableModel>/clusterdetails}">
 										<core:Item key="{TableModel>Cluster}" text="{TableModel>Cluster}" />
 									</ComboBox>
-									<Label text="{i18n>Category}" required="true"
+									<Label text="{i18n>Category}" 
                                         class="sapMLabelNoText" />
 									<ComboBox id="Category_" 
                                         change="NewCompanyCodeChange" items="{TableModel>/Categorydetails}">
 										<core:Item key="{TableModel>Category}" text="{TableModel>Category}" />
 									</ComboBox>
-									<Label text="{i18n>SavingType}" 
+									<Label text="{i18n>SavingType}" required="true"
                                         class="sapMLabelNoText" />
 									<ComboBox id="saving_type" 
-                                        change="NewCompanyCodeChange" items="{TableModel>/SavingTypedetails}">
+                                        change="NewSavingTypeChange" items="{TableModel>/SavingTypedetails}">
 										<core:Item key="{TableModel>SavingType}" text="{TableModel>SavingType}" />
 									</ComboBox>
-									<Label text="{i18n>LastYPONO}"  required="true"
+									<Label text="{i18n>LastYPONO}"  id="label_La_po_no" visible="false"
                                         class="sapMLabelNoText" />
-									<Input id="La_po_no" maxLength="50" value="{predictionModelData>/sLastYearPONo}"></Input>
-									<Label text="{i18n>LastYPOValue}"   required="true"
+									<Input id="La_po_no" maxLength="50" visible="false" editable="false"  value="{predictionModelData>/sLastYearPONo}"></Input>
+									<Button text="{i18n>btnlastpo}" id="_lastPOnumberdata" visible="false"
+							press="_onPoLastYear" class="buttonClass" type="Accept"></Button>
+									<Label text="{i18n>LastYPOValue}"   id="label_po_value" visible="false"
                                         class="sapMLabelNoText" />
-									<Input id="po_value" maxLength="50" value="{predictionModelData>/sLastYearPOValue}"></Input>
-									<Label text="{i18n>LastYPOCurr}"  required="true"
+									<Input id="po_value" maxLength="50" visible="false" value="{predictionModelData>/sLastYearPOValue}"></Input>
+									<Label text="{i18n>LastYPOCurr}" id="label_po_Currency" visible="false"
                                         class="sapMLabelNoText" />
-									<Input id="po_Currency" maxLength="50" value="{predictionModelData>/sLastYearPOCurr}"></Input>
+									<Input id="po_Currency" maxLength="50" visible="false" value="{predictionModelData>/sLastYearPOCurr}"></Input>
 									<!-- new changes for upload file -->
 									<Label text="{i18n>ProjectDes}"
                                         class="sapMLabelNoText" />
 									<TextArea id="Description" rows="3.5" maxLength="250"
                                         showExceededText="true" value="{predictionModelData>/sProjectDes}" />
 									<core:Title text="" class="remove-space" />
+									<Label text="{i18n>QvalueandCurr}"
+                                        class="sapMLabelNoText" />
+									<Input id="Quated_value" maxLength="20" editable="true"  value="" ></Input>
+									<Input id="Quated_Curre" maxLength="20" editable="true"  value="" ></Input>
 									<Label text="{i18n>Qvalue}"
                                         class="sapMLabelNoText" />
 									<Input id="Quated" maxLength="20" editable="true"  value="{predictionModelData>/sQuatedValue}" change="onCalculatePercentageDifference"></Input>
@@ -176,6 +182,7 @@
 									 
 									<Label text="{i18n>Remarks}" 
                                         class="sapMLabelNoText" />
+										
 										<FeedInput id="Remarks_Fields" value=""
 		post="onPost" placeholder="Remarks"
 		showIcon="false" />

@@ -120,6 +120,13 @@
                                         change="NewQvalueandCurrChange" editable="true" items="{TableModel>/QuatedCurrdetails}">
 										<core:Item key="{TableModel>Currency}" text="{TableModel>Currency}" />
 									</ComboBox>
+									<Label text="{i18n>OrderValueandCuree}"
+                                        class="sapMLabelNoText" />
+									<Input id="OrdervalueCurr" maxLength="20" editable="true"  value="{predictionModelData>/sQuatedValueCurr}" ></Input>
+								<ComboBox id="order_val_Curre" 
+                                        change="NewQvalueandCurrChangeOrder" editable="true" items="{TableModel>/QuatedCurrdetails}">
+										<core:Item key="{TableModel>Currency}" text="{TableModel>Currency}" />
+									</ComboBox>
 									<Label text="{i18n>Qvalue}"
                                         class="sapMLabelNoText" />
 									<Input id="Quated" maxLength="20" editable="false"  value="{predictionModelData>/sQuatedValue}" change="onCalculatePercentageDifference"></Input>
@@ -128,7 +135,7 @@
                                         change="NewCompanyCodeChange" items=""><core:Item key="{context>/POCurrency}" text="{context>/POCurrency}" /></ComboBox> -->
 									<Label text="{i18n>OValue}"
                                         class="sapMLabelNoText" />
-									<Input id="Order_Value" maxLength="20" editable="false"   value="{predictionModel>/sPOValue}" change="onCalculatePercentageDifference"></Input>
+									<Input id="Order_Value" maxLength="20" editable="false"   value="" change="onCalculatePercentageDifference"></Input>
 									<Label text="{i18n>Savings}" 
                                         class="sapMLabelNoText" />
 									<Input id="po_Savings" maxLength="20" editable="false" value="{predictionModelData>/sSavings}" ></Input>

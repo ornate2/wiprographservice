@@ -21,11 +21,11 @@ function (Controller, MessageToast, JSONModel, Dialog, TooltipBase, UIComponent,
             oRouter.getRoute("wiprographForm").attachPatternMatched(this._onObjectMatched, this);
             var data = {
                 "Tabledetails":[{
-                  "Quarter": "Q4-2024",
+                  "Quarter": "Q1-2025",
                   "Saving": "",
                   },
                   {
-                    "Quarter": "Q1-2025",
+                    "Quarter": "Q2-2025",
                     "Saving": "",
                     }],
               "clusterdetails": [
@@ -147,9 +147,9 @@ function (Controller, MessageToast, JSONModel, Dialog, TooltipBase, UIComponent,
               });
     
     
-              this.getView().byId("PODate_").setValue("20240102");
+              this.getView().byId("PODate_").setValue("20240529");
               
-              this.getView().byId("Region").setValue("PO Plant Country");
+              this.getView().byId("Region").setValue("ZA");
              // Retrieve the Date objects from the input fields
           
              
@@ -512,7 +512,7 @@ function (Controller, MessageToast, JSONModel, Dialog, TooltipBase, UIComponent,
           }else{
             var saveButton = oView.byId("_btnSave").setEnabled(false);
             var remarks = this.byId("Remarks_Fields").getValue();
-            var buyer = "manik@gmail.com";
+            var buyer = "SAMBIT.MOHANTY2@WIPRO.COM";
         var remarksbuyer = this.byId("Remarks_Fields").setValue(buyer + " " + remarks);
           var oData = {
             PONumber: oView.byId("AssetTitleId").getValue(),
@@ -625,7 +625,7 @@ function (Controller, MessageToast, JSONModel, Dialog, TooltipBase, UIComponent,
                  informationDialog.open();
           }else{
             var remarks = this.byId("Remarks_Fields").getValue();
-            var buyer = "manik@gmail.com";
+            var buyer = "SAMBIT.MOHANTY2@WIPRO.COM";
         var remarksbuyer = this.byId("Remarks_Fields").setValue(" " + remarks);
             var oData = {
               PONumber: oView.byId("AssetTitleId").getValue(),
@@ -701,8 +701,8 @@ function (Controller, MessageToast, JSONModel, Dialog, TooltipBase, UIComponent,
                               sQuated_Curre: oData.Quated_Curre,
                           };
       
-                          var oPredictionModel = new sap.ui.model.json.JSONModel(oDataSet);
-                          oView.setModel(oPredictionModel, "predictionModelData");
+                          var oPredictionModelData = new sap.ui.model.json.JSONModel(oDataSet);
+                          oView.setModel(oPredictionModelData, "predictionModelData");
                           oRouter.navTo("wiprograph"); // Adjust the route name as necessary
                       } else {
                           sap.m.MessageToast.show("Router not found.");
@@ -893,6 +893,58 @@ function (Controller, MessageToast, JSONModel, Dialog, TooltipBase, UIComponent,
             console.log("Selected currency rate or USD rate not found");
         }
     },
+    NewQvalueandCurrChangeOrder: function() {
+      var oView = this.getView();
+      
+      // Get quoted value and selected currency key
+      var quatedValue = parseFloat(oView.byId("OrdervalueCurr").getValue());
+      var quatedCurrKey = oView.byId("order_val_Curre").getSelectedKey();
+      
+      // Fetch the currency details from the model
+      var oTableModel = this.getView().getModel("TableModel");
+      var aCurrencyDetails = oTableModel.getProperty("/QuatedCurrdetails");
+      
+      // Find the currency rate for the selected currency
+      var selectedCurrency = aCurrencyDetails.find(function(currency) {
+          return currency.Currency === quatedCurrKey;
+      });
+      
+      // Find the USD currency rate
+      var usdCurrency = aCurrencyDetails.find(function(currency) {
+          return currency.Currency === "USD";
+      });
+      
+      if (selectedCurrency && usdCurrency) {
+          var rate = selectedCurrency.Rate;
+          var usdRate = usdCurrency.Rate;
+      
+          // Convert the quoted value using the selected currency rate
+          var convertedValue = quatedValue / rate;
+          oView.byId("Order_Value").setValue(convertedValue.toFixed(2));
+      
+          // Get input values for percentage calculation
+          var input01 = oView.byId("Order_Value");
+          var input02 = oView.byId("Quated");
+          var input03 = oView.byId("po_Savings_auto");
+      
+          var iValue1 = parseFloat(input01.getValue());
+          var iValue2 = parseFloat(input02.getValue());
+      
+          if (!isNaN(iValue1) && !isNaN(iValue2) && iValue2 !== 0) {
+              // Calculate percentage difference using USD rate
+              var iDifference = iValue1 - iValue2;
+              oView.byId("po_Savings").setValue(iDifference);
+      
+              var iPercentageDifference = (iDifference / (iValue1 / rate * usdRate)) * 100;
+              input03.setValue(iPercentageDifference.toFixed(2) + "%");
+          } else {
+              // Handle invalid input or zero division
+              console.log("Invalid input or zero division in quoted and order values");
+          }
+      } else {
+          console.log("Selected currency rate or USD rate not found");
+      }
+  },
     _onPoLastYear: function(){
 
     },
@@ -900,13 +952,13 @@ function (Controller, MessageToast, JSONModel, Dialog, TooltipBase, UIComponent,
       let Last_PO_NO = this.getView().byId("La_po_no").getValue("");
 
       if(Last_PO_NO === ""){
-        this.getView().byId("La_po_no").setValue("4500427800");
-      let LastYPOValue = this.getView().byId("po_value").setValue("66");
-      let LastYPOCurr = this.getView().byId("po_Currency").setValue("USD")
+        this.getView().byId("La_po_no").setValue("4500428104");
+      let LastYPOValue = this.getView().byId("po_value").setValue("1026.73");
+      let LastYPOCurr = this.getView().byId("po_Currency").setValue("ZAR")
       this.getView().byId("_lastPOnumberdata").setEnabled(false)
       }else{
-        let LastYPOValue = this.getView().byId("po_value").setValue("66");
-      let LastYPOCurr = this.getView().byId("po_Currency").setValue("USD")
+        let LastYPOValue = this.getView().byId("po_value").setValue("1026.73");
+      let LastYPOCurr = this.getView().byId("po_Currency").setValue("ZAR")
       }
      
     }
